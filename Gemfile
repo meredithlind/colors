@@ -11,7 +11,7 @@ gem 'rails', '~> 5.0.2'
 gem 'puma', '~> 3.0'
 
 gem 'bcrypt-ruby'
-gem 'haml'
+# gem 'haml'
 gem 'pg'
 gem 'sqlite3'
 gem 'thin'
