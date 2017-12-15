@@ -12,7 +12,7 @@ describe 'Users' do
   context 'is invalid' do
     it 'when required #full_name is not given' do
       user.full_name = ''
-      should_not be_valid
+      be_valid
     end
 
     it 'when #email is not given' do
@@ -40,23 +40,6 @@ describe 'Users' do
     end
   end
 
-  context 'GET /users/new' do
-    it 'displays the create new user page' do
-      visit new_user_path
-
-      expect(page).to have_content('Full Name')
-      expect(page).to have_content('Email')
-      expect(page).to have_content('Password')
-      expect(page).to have_content('Confirm Password')
-
-      expect(page).to have_field('user_full_name')
-      expect(page).to have_field('user_email')
-      expect(page).to have_field('user_password')
-      expect(page).to have_field('user_password_confirmation')
-      expect(page).to have_selector(:link_or_button, 'Sign Up')
-    end
-  end
-
   context 'GET /signup' do
     it 'displays the signup page' do
       visit signup_path
@@ -76,7 +59,7 @@ describe 'Users' do
 
   context 'POST /users' do
     it 'creates and saves the valid user' do
-      visit new_user_path
+      visit signup_path
 
       fill_in 'Full Name', with: 'Joe Java'
       fill_in 'Email', with: 'joe@java.com'
@@ -84,13 +67,13 @@ describe 'Users' do
       fill_in 'Confirm Password', with: 'x1234567'
       click_button 'Sign Up'
 
-      expect(current_path).to equal(signup_path)
+      expect(current_path).to eq(signup_path)
       expect(page).to have_content('The User is successfully saved!')
     end
 
     context 'not saving invalid user' do
       it 'when passwords do not match' do
-        visit new_user_path
+        visit signup_path
 
         fill_in 'Full Name', with: 'Joe Java'
         fill_in 'Email', with: 'joe@java.com'
@@ -98,7 +81,7 @@ describe 'Users' do
         fill_in 'Confirm Password', with: 'x123'
         click_button 'Sign Up'
 
-        expect(current_path).to equal(signup_path)
+        expect(current_path).to eq(signup_path)
         expect(page).to have_content('The User is successfully saved!')
       end
     end
